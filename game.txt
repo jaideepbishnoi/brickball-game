@@ -1,0 +1,381 @@
+#include<stdio.h>
+#include<allegro.h>
+void frd_move();
+void bck_move();
+//void draw_bric();
+void draw_ball();
+void collision();
+static int cor1=275,cor2=100,rad=10,col=5,col1=25,col2=50,col3=75,col4=100;
+static int x=10;
+static int y=380;
+static int z=45;
+static int p=10;
+int main()
+{
+allegro_init();
+set_gfx_mode(GFX_AUTODETECT_WINDOWED,600,400,0,0);
+install_keyboard();
+//draw_bric();
+BITMAP *buffer=create_bitmap(600,400);
+while(!key[KEY_ESC])
+{
+if(key[KEY_ESC])
+return;
+if(x==10)
+frd_move();
+if(x==600)
+bck_move();
+}
+allegro_exit();
+return 0;
+}
+END_OF_MAIN();
+void frd_move()
+{
+BITMAP *buffer=create_bitmap(600,400);
+while(x<=598||key[KEY_ESC])
+{
+acquire_screen();
+x+=2;
+z=y;
+p=x;//for collision purpose
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,x+25,y-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(key[KEY_RIGHT])
+  {
+while(x<=598)
+   {
+collision();
+   x+=2;
+   p+=2;
+   z-=1;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p+25,z-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==600)//new session starts from here
+{
+//acquire_screen();
+while(z>=0)
+{
+collision();
+x-=2;
+p-=2;
+z-=1;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(z==0||x==12)
+{
+//acquire_screen();
+while(x>=10)
+{collision();
+x-=2;
+p-=2;
+z+=1;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==10)
+{
+//acquire_screen();
+while(z<=380)
+{collision();
+x+=2;
+p+=2;
+z+=1;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==598)//new 2 statrts here
+{
+x-=2;
+z+=1;
+p-=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+while(x<=598||key[KEY_ESC])
+{collision();
+acquire_screen();
+x+=2;
+z=y;
+p+=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p+25,z-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==600)
+bck_move();
+}
+}
+if(z==380&&x>=12)
+{
+while(x<=598||key[KEY_ESC])
+{collision();
+acquire_screen();
+x+=2;
+z=y;
+p=x;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p+25,z-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==600)
+bck_move();
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+void bck_move()
+{
+BITMAP *buffer=create_bitmap(600,400);
+while(x>=12||key[KEY_ESC])
+{
+acquire_screen();
+x-=2;
+z=y;
+p=x;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,x+25,y-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(key[KEY_LEFT])
+  {
+   //acquire_screen();
+while(x>=12)
+   {collision();
+   x-=2;
+   z-=1;
+   p-=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p+25,z-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==12)//new session starts from here
+{
+//acquire_screen();
+while(z>=0)
+{collision();
+x+=2;
+z-=1;
+p+=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(z==0||x==598)
+{
+//acquire_screen();
+while(x<=598)
+{collision();
+x+=2;
+z+=1;
+p+=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,x,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==600)
+{
+//acquire_screen();
+while(z<=380)
+{collision();
+x-=2;
+z+=1;
+p-=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==12)//new 2 statrts here
+{
+x+=2;
+z+=1;
+p+=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p,z,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+//release_screen();
+rest(10);
+clear_bitmap(buffer);
+while(x>=12||key[KEY_ESC])
+{collision();
+acquire_screen();
+x-=2;
+z=y;
+p-=2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p+25,z-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==10)
+frd_move();
+}
+}
+
+if(z==380&&x<=598)
+{
+while(x>=12||key[KEY_ESC])
+{collision();
+acquire_screen();
+x-=2;
+z=y;
+p=-2;
+rectfill(buffer,x,y,x+50,y+50,makecol(212,121,123));
+circlefill(buffer,p+25,z-10,10,makecol(211,12,231));
+circlefill(buffer,cor1,cor2,rad,col);
+circlefill(buffer,cor1+20,cor2+20,rad,col1);
+circlefill(buffer,cor1+40,cor2+30,rad,col2);
+circlefill(buffer,cor1+65,cor2+45,rad,col3);
+circlefill(buffer,cor1+80,cor2+70,rad,col4);
+blit(buffer,screen,0,0,0,0,600,400);
+release_screen();
+rest(10);
+clear_bitmap(buffer);
+if(x==10)
+frd_move();
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+void collision()
+{
+BITMAP *buffer=create_bitmap(600,400);
+if(getpixel(screen,p,z)==col)
+col=0;
+else if(getpixel(screen,p,z)==col1)
+col1=0;
+else if(getpixel(screen,p,z)==col2)
+col2=0;
+else if(getpixel(screen,p,z)==col3)
+col3=0;
+else if(getpixel(screen,p,z)==col4)
+col4=0;
+}
+
